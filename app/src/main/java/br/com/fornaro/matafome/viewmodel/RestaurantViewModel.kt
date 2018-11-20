@@ -12,20 +12,21 @@ import io.reactivex.schedulers.Schedulers
 
 class RestaurantViewModel(private val restaurantRepository: RestaurantRepository) : ViewModel() {
 
+    private var restaurantsLiveData: MutableLiveData<Resource<List<Restaurant>>>? = null
     private val disposables = CompositeDisposable()
 
     fun getRestaurants(): LiveData<Resource<List<Restaurant>>> {
-        val data = MutableLiveData<Resource<List<Restaurant>>>()
-
-        disposables.add(restaurantRepository.getRestaurants()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { data.value = Resource.loading() }
-                .subscribe({ data.value = Resource.success(it) },
-                        { data.value = Resource.error(it.message) })
-        )
-
-        return data
+        restaurantsLiveData?.let { return it }
+        restaurantsLiveData = MutableLiveData()
+        return restaurantsLiveData!!.apply {
+            disposables.add(restaurantRepository.getRestaurants()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe { value = Resource.loading() }
+                    .subscribe({ value = Resource.success(it) },
+                            { value = Resource.error(it.message) })
+            )
+        }
     }
 
     override fun onCleared() {
