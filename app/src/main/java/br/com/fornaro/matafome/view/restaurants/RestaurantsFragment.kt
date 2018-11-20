@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.fornaro.matafome.R
@@ -23,13 +24,32 @@ class RestaurantsFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: RestaurantViewModelFactory
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[RestaurantViewModel::class.java] }
-    private val viewAdapter by lazy { RestaurantsAdapter() }
+    private val viewAdapter by lazy {
+        RestaurantsAdapter {
+            val action = RestaurantsFragmentDirections.nextAction(it.id)
+            NavHostFragment.findNavController(this).navigate(action)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         (activity?.application as MainApplication).appComponent.inject(this)
 
+        setupViewModel()
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_restaurants, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupRecyclerView()
+    }
+
+    private fun setupViewModel() {
         viewModel.getRestaurants().observe(this, Observer { resource ->
             loading.visibility = View.GONE
             when (resource.status) {
@@ -43,16 +63,6 @@ class RestaurantsFragment : Fragment() {
                 }
             }
         })
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_restaurants, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setupRecyclerView()
     }
 
     private fun setupRecyclerView() {

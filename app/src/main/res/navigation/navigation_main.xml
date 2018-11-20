@@ -9,5 +9,25 @@
         android:id="@+id/restaurantsFragment"
         android:name="br.com.fornaro.matafome.view.restaurants.RestaurantsFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_restaurants" />
+        tools:layout="@layout/fragment_restaurants">
+
+        <action
+            android:id="@+id/next_action"
+            app:destination="@id/restaurantDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/restaurantDetailFragment"
+        android:name="br.com.fornaro.matafome.view.restaurantdetail.RestaurantDetailFragment"
+        android:label="fragment_restaurant_detail"
+        tools:layout="@layout/fragment_restaurant_detail">
+
+        <argument
+            android:name="restaurantId"
+            app:argType="string" />
+    </fragment>
 </navigation>
