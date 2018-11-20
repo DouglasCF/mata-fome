@@ -9,9 +9,8 @@ import br.com.fornaro.matafome.repository.RestaurantRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
-class RestaurantViewModel @Inject constructor(private val restaurantRepository: RestaurantRepository) : ViewModel() {
+class RestaurantViewModel(private val restaurantRepository: RestaurantRepository) : ViewModel() {
 
     private val disposables = CompositeDisposable()
 
@@ -19,11 +18,11 @@ class RestaurantViewModel @Inject constructor(private val restaurantRepository: 
         val data = MutableLiveData<Resource<List<Restaurant>>>()
 
         disposables.add(restaurantRepository.getRestaurants()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { data.value = Resource.loading() }
-            .subscribe({ data.value = Resource.success(it) },
-                { data.value = Resource.error(it.message) })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { data.value = Resource.loading() }
+                .subscribe({ data.value = Resource.success(it) },
+                        { data.value = Resource.error(it.message) })
         )
 
         return data
