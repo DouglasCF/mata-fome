@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MataFome</string>
+
+    <string name="delivery_fee">Taxa de entrega</string>
 </resources>

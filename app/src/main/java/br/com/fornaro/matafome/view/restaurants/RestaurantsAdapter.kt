@@ -16,6 +16,10 @@ class RestaurantsAdapter : RecyclerView.Adapter<RestaurantsAdapter.ViewHolder>()
     override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(list[position])
+    fun setData(data: List<Restaurant>) {
+        list.addAll(data)
+        notifyDataSetChanged()
+    }
 
     class ViewHolder(private val binding: ItemRestaurantBinding) : RecyclerView.ViewHolder(binding.root) {
 

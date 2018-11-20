@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.fornaro.matafome.R
 import br.com.fornaro.matafome.common.Resource
@@ -29,10 +30,11 @@ class RestaurantsFragment : Fragment() {
 
         (activity?.application as MainApplication).appComponent.inject(this)
 
-        viewModel.getRestaurants().observe(this, Observer {
+        viewModel.getRestaurants().observe(this, Observer { resource ->
             loading.visibility = View.GONE
-            when (it.status) {
+            when (resource.status) {
                 Resource.Status.SUCCESS -> {
+                    resource.data?.let { viewAdapter.setData(it) }
                 }
                 Resource.Status.ERROR -> {
                 }
@@ -56,6 +58,7 @@ class RestaurantsFragment : Fragment() {
     private fun setupRecyclerView() {
         recyclerView.apply {
             setHasFixedSize(true)
+            addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             layoutManager = LinearLayoutManager(activity)
             adapter = viewAdapter
         }

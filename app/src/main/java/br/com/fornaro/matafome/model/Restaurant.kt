@@ -7,7 +7,7 @@ data class Restaurant(
     val name: String,
     val type: String,
     val description: String,
-    @SerializedName("delivery_fee") val deliveryFee: Double,
-    @SerializedName("image_url") val image_url: String?,
+    @SerializedName("delivery_fee") val deliveryFee: Float,
+    @SerializedName("image_url") val imageUrl: String?,
     val rating: Double
 )
