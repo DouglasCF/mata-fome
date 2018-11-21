@@ -13,13 +13,13 @@ import io.reactivex.schedulers.Schedulers
 class RestaurantViewModel(private val restaurantRepository: RestaurantRepository) : ViewModel() {
 
     private var restaurantsLiveData: MutableLiveData<Resource<List<Restaurant>>>? = null
-    private val disposables = CompositeDisposable()
+    private val disposable = CompositeDisposable()
 
     fun getRestaurants(): LiveData<Resource<List<Restaurant>>> {
         restaurantsLiveData?.let { return it }
         restaurantsLiveData = MutableLiveData()
         return restaurantsLiveData!!.apply {
-            disposables.add(restaurantRepository.getRestaurants()
+            disposable.add(restaurantRepository.getRestaurants()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { value = Resource.loading() }
@@ -30,6 +30,6 @@ class RestaurantViewModel(private val restaurantRepository: RestaurantRepository
     }
 
     override fun onCleared() {
-        disposables.clear()
+        disposable.clear()
     }
 }
