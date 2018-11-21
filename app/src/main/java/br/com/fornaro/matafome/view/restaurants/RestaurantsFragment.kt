@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -14,7 +15,6 @@ import br.com.fornaro.matafome.R
 import br.com.fornaro.matafome.common.Resource
 import br.com.fornaro.matafome.view.MainApplication
 import br.com.fornaro.matafome.viewmodel.RestaurantViewModel
-import br.com.fornaro.matafome.viewmodel.factory.RestaurantViewModelFactory
 import kotlinx.android.synthetic.main.fragment_restaurants.*
 import kotlinx.android.synthetic.main.layout_content_restaurants.*
 import javax.inject.Inject
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class RestaurantsFragment : Fragment() {
 
     @Inject
-    lateinit var viewModelFactory: RestaurantViewModelFactory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[RestaurantViewModel::class.java] }
     private val viewAdapter by lazy {
         RestaurantsAdapter {

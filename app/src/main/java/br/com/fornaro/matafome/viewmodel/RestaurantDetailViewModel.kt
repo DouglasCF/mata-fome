@@ -9,8 +9,10 @@ import br.com.fornaro.matafome.repository.RestaurantDetailRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class RestaurantDetailViewModel(private val restaurantDetailRepository: RestaurantDetailRepository) : ViewModel() {
+class RestaurantDetailViewModel @Inject constructor(private val restaurantDetailRepository: RestaurantDetailRepository) :
+    ViewModel() {
 
     private var restaurantDetailLiveData: MutableLiveData<Resource<List<RestaurantDetail>>>? = null
     private val disposable = CompositeDisposable()

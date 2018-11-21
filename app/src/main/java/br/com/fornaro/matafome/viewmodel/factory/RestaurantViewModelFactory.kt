@@ -2,18 +2,22 @@ package br.com.fornaro.matafome.viewmodel.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import br.com.fornaro.matafome.repository.RestaurantRepository
-import br.com.fornaro.matafome.viewmodel.RestaurantViewModel
 import javax.inject.Inject
+import javax.inject.Provider
 
-class RestaurantViewModelFactory @Inject constructor(private val restaurantRepository: RestaurantRepository) :
+class DaggerViewModelFactory @Inject constructor(private val viewModelsMap: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>) :
     ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(RestaurantViewModel::class.java)) {
+        val creator = viewModelsMap[modelClass] ?: viewModelsMap.asIterable().firstOrNull {
+            modelClass.isAssignableFrom(it.key)
+        }?.value ?: throw IllegalArgumentException("unknown model class $modelClass")
+        return try {
             @Suppress("UNCHECKED_CAST")
-            return RestaurantViewModel(restaurantRepository) as T
+            creator.get() as T
+        } catch (e: Exception) {
+            throw RuntimeException(e)
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
+
 }
