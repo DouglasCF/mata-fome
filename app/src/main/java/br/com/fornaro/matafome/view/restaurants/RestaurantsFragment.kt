@@ -26,7 +26,8 @@ class RestaurantsFragment : Fragment() {
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[RestaurantViewModel::class.java] }
     private val viewAdapter by lazy {
         RestaurantsAdapter {
-            val action = RestaurantsFragmentDirections.nextAction(it.id)
+            val action = RestaurantsFragmentDirections.nextAction()
+            action.setRestaurant(it)
             NavHostFragment.findNavController(this).navigate(action)
         }
     }

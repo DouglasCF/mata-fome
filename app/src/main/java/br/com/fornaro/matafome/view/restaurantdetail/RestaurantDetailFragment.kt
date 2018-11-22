@@ -29,8 +29,8 @@ class RestaurantDetailFragment : Fragment() {
         (activity?.application as MainApplication).appComponent.inject(this)
 
         val safeArgs = RestaurantDetailFragmentArgs.fromBundle(arguments)
-        val restaurantId = safeArgs.restaurantId
-        setupViewModel(restaurantId)
+        val restaurant = safeArgs.restaurant
+        setupViewModel(restaurant!!.id)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

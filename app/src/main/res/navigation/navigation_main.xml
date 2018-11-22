@@ -27,7 +27,9 @@
         tools:layout="@layout/fragment_restaurant_detail">
 
         <argument
-            android:name="restaurantId"
-            app:argType="string" />
+            android:name="restaurant"
+            android:defaultValue="@null"
+            app:argType="br.com.fornaro.matafome.model.Restaurant"
+            app:nullable="true" />
     </fragment>
 </navigation>
