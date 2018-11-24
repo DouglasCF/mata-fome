@@ -7,6 +7,6 @@ import io.reactivex.Observable
 class RestaurantRepository(private val api: RestaurantApi) {
 
     fun getRestaurants(): Observable<List<Restaurant>> {
-        return api.getRestaurants("5bf306382f00003939cfa367")
+        return api.getRestaurants("5bf99fbc3200007000f2256e")
     }
 }

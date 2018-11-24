@@ -7,12 +7,12 @@ import br.com.fornaro.matafome.databinding.ItemRestaurantBinding
 import br.com.fornaro.matafome.model.Restaurant
 
 class RestaurantsAdapter(private val listener: (Restaurant) -> Unit) :
-    RecyclerView.Adapter<RestaurantsAdapter.ViewHolder>() {
+        RecyclerView.Adapter<RestaurantsAdapter.ViewHolder>() {
 
     private val list = mutableListOf<Restaurant>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder(ItemRestaurantBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            ViewHolder(ItemRestaurantBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     override fun getItemCount() = list.size
 

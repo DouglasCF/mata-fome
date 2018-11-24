@@ -6,16 +6,13 @@
     <data>
 
         <variable
-            name="restaurant"
-            type="br.com.fornaro.matafome.model.Restaurant" />
+            name="restaurantDetail"
+            type="br.com.fornaro.matafome.model.RestaurantDetail" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
         android:padding="@dimen/default_padding">
 
         <ImageView
@@ -24,13 +21,13 @@
             android:layout_height="@dimen/image_size"
             android:contentDescription="@null"
             app:center_crop="@{true}"
-            app:image_url="@{restaurant.imageUrl}"
+            app:image_url="@{restaurantDetail.imageUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:placeholder="@{@drawable/ic_restaurant}"
+            app:placeholder="@{@drawable/ic_food}"
             app:rounded_corners="@{true}"
-            tools:srcCompat="@drawable/ic_restaurant" />
+            tools:srcCompat="@drawable/ic_food" />
 
         <TextView
             android:id="@+id/nameText"
@@ -39,46 +36,24 @@
             android:layout_marginStart="@dimen/default_margin"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{restaurant.name}"
+            android:text="@{restaurantDetail.name}"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/image"
-            tools:text="Restaurant Name" />
+            tools:text="Item Name" />
 
         <TextView
-            android:id="@+id/typeText"
+            android:id="@+id/descriptionText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_space"
-            android:text="@{restaurant.type}"
+            android:text="@{restaurantDetail.description}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/nameText"
             app:layout_constraintTop_toBottomOf="@id/nameText"
             tools:text="Type of Restaurant" />
-
-        <TextView
-            android:id="@+id/ratingText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_space"
-            android:text="@{String.valueOf(restaurant.rating)}"
-            android:textColor="@color/ratingColor"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/nameText"
-            app:layout_constraintTop_toBottomOf="@id/typeText"
-            tools:text="4.5" />
-
-        <ImageView
-            android:id="@+id/ratingImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_space"
-            android:contentDescription="@null"
-            app:layout_constraintBottom_toBottomOf="@id/ratingText"
-            app:layout_constraintStart_toEndOf="@id/ratingText"
-            app:layout_constraintTop_toTopOf="@id/ratingText"
-            app:srcCompat="@drawable/ic_star" />
 
         <br.com.fornaro.matafome.view.common.MoneyTextView
             android:id="@+id/priceText"
@@ -88,19 +63,9 @@
             android:textColor="@color/priceColor"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/typeText"
-            app:price="@{restaurant.deliveryFee}"
+            app:layout_constraintStart_toStartOf="@id/nameText"
+            app:layout_constraintTop_toBottomOf="@id/descriptionText"
+            app:price="@{restaurantDetail.price}"
             tools:price="15" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_space"
-            android:text="@string/delivery_fee"
-            android:textColor="@color/priceColor"
-            app:layout_constraintBottom_toBottomOf="@id/priceText"
-            app:layout_constraintEnd_toStartOf="@id/priceText"
-            app:layout_constraintTop_toTopOf="@id/priceText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

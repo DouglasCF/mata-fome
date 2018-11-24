@@ -2,6 +2,10 @@ package br.com.fornaro.matafome.common
 
 class Resource<T> private constructor(val status: Status, val data: T?, val message: String?) {
 
+    fun isSuccess() = status == Status.SUCCESS
+    fun isError() = status == Status.ERROR
+    fun isLoading() = status == Status.LOADING
+
     enum class Status {
         SUCCESS, ERROR, LOADING
     }
