@@ -13,6 +13,9 @@ interface CartItemDao {
     @Insert
     fun insert(cartItem: CartItem)
 
+    @Insert
+    fun insert(cartItem: List<CartItem>)
+
     @Delete
     fun delete(cartItem: CartItem)
 
