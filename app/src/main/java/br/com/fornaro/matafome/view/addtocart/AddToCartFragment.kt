@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import br.com.fornaro.matafome.databinding.FragmentAddToCartBinding
 import br.com.fornaro.matafome.model.RestaurantDetail
+import kotlinx.android.synthetic.main.fragment_add_to_cart.*
 
 class AddToCartFragment : Fragment() {
 
@@ -24,9 +26,18 @@ class AddToCartFragment : Fragment() {
         val restaurantDetail = safeArgs.restaurantDetail
 
         assignToBinding(restaurantDetail!!)
+        setupAddToCartButton()
     }
 
     private fun assignToBinding(restaurantDetail: RestaurantDetail) {
         binding.restaurantDetail = restaurantDetail
+    }
+
+    private fun setupAddToCartButton() {
+        addToCartButton.setOnClickListener {
+            // Add to cart
+
+            NavHostFragment.findNavController(this).navigateUp()
+        }
     }
 }
