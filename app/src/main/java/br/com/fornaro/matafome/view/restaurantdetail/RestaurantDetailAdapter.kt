@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.fornaro.matafome.databinding.ItemRestaurantDetailBinding
 import br.com.fornaro.matafome.model.RestaurantDetail
 
-class RestaurantDetailAdapter : RecyclerView.Adapter<RestaurantDetailAdapter.ViewHolder>() {
+class RestaurantDetailAdapter(private val listener: (RestaurantDetail) -> Unit) :
+        RecyclerView.Adapter<RestaurantDetailAdapter.ViewHolder>() {
 
     private val list = mutableListOf<RestaurantDetail>()
 
@@ -15,7 +16,7 @@ class RestaurantDetailAdapter : RecyclerView.Adapter<RestaurantDetailAdapter.Vie
 
     override fun getItemCount() = list.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(list[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(list[position], listener)
 
     fun setData(data: List<RestaurantDetail>) {
         list.clear()
@@ -25,9 +26,11 @@ class RestaurantDetailAdapter : RecyclerView.Adapter<RestaurantDetailAdapter.Vie
 
     class ViewHolder(private val binding: ItemRestaurantDetailBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(restaurantDetail: RestaurantDetail) {
+        fun bind(restaurantDetail: RestaurantDetail, listener: (RestaurantDetail) -> Unit) {
             binding.restaurantDetail = restaurantDetail
             binding.executePendingBindings()
+
+            itemView.setOnClickListener { listener(restaurantDetail) }
         }
     }
 }

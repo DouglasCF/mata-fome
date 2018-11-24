@@ -31,5 +31,25 @@
             android:defaultValue="@null"
             app:argType="br.com.fornaro.matafome.model.Restaurant"
             app:nullable="true" />
+
+        <action
+            android:id="@+id/next_action"
+            app:destination="@id/addToCartFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addToCartFragment"
+        android:name="br.com.fornaro.matafome.view.addtocart.AddToCartFragment"
+        android:label="@string/item_detail">
+
+        <argument
+            android:name="restaurantDetail"
+            android:defaultValue="@null"
+            app:argType="br.com.fornaro.matafome.model.RestaurantDetail"
+            app:nullable="true" />
     </fragment>
 </navigation>

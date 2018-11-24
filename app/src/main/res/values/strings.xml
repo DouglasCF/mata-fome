@@ -3,4 +3,5 @@
 
     <string name="delivery_fee">Taxa de entrega</string>
     <string name="menu">Cardápio</string>
+    <string name="item_detail">Detalhe do item</string>
 </resources>

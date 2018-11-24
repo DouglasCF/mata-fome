@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.fornaro.matafome.common.Resource
@@ -28,7 +29,13 @@ class RestaurantDetailFragment : Fragment() {
     private val viewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory)[RestaurantDetailViewModel::class.java]
     }
-    private val viewAdapter by lazy { RestaurantDetailAdapter() }
+    private val viewAdapter by lazy {
+        RestaurantDetailAdapter {
+            val action = RestaurantDetailFragmentDirections.nextAction()
+            action.setRestaurantDetail(it)
+            NavHostFragment.findNavController(this).navigate(action)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
