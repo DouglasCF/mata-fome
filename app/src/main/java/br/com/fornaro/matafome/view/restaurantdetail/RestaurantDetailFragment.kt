@@ -23,6 +23,7 @@ import javax.inject.Inject
 class RestaurantDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentRestaurantDetailBinding
+    private lateinit var restaurant: Restaurant
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -32,6 +33,7 @@ class RestaurantDetailFragment : Fragment() {
     private val viewAdapter by lazy {
         RestaurantDetailAdapter {
             val action = RestaurantDetailFragmentDirections.nextAction()
+            action.setRestaurant(restaurant)
             action.setRestaurantDetail(it)
             NavHostFragment.findNavController(this).navigate(action)
         }
@@ -41,6 +43,9 @@ class RestaurantDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         (activity?.application as MainApplication).appComponent.inject(this)
+
+        val safeArgs = RestaurantDetailFragmentArgs.fromBundle(arguments)
+        restaurant = safeArgs.restaurant ?: throw Exception("restaurant cant be null")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -51,10 +56,7 @@ class RestaurantDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val safeArgs = RestaurantDetailFragmentArgs.fromBundle(arguments)
-        val restaurant = safeArgs.restaurant
-        setupViewModel(restaurant!!.id)
-
+        setupViewModel(restaurant.id)
         assignToBinding(restaurant)
         changeActionBarTitle("${restaurant.name} - ${restaurant.type}")
         setupRecyclerView()

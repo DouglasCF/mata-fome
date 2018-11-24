@@ -47,6 +47,12 @@
         android:label="@string/item_detail">
 
         <argument
+            android:name="restaurant"
+            android:defaultValue="@null"
+            app:argType="br.com.fornaro.matafome.model.Restaurant"
+            app:nullable="true" />
+
+        <argument
             android:name="restaurantDetail"
             android:defaultValue="@null"
             app:argType="br.com.fornaro.matafome.model.RestaurantDetail"

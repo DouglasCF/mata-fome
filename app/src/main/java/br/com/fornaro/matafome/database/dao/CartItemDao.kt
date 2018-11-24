@@ -7,6 +7,9 @@ import br.com.fornaro.matafome.database.entities.CartItem
 @Dao
 interface CartItemDao {
 
+    @Query("SELECT * FROM CartItem WHERE restaurantName = :restaurantName AND itemName = :itemName")
+    fun get(restaurantName: String, itemName: String): CartItem?
+
     @Query("SELECT * FROM CartItem")
     fun getAll(): LiveData<List<CartItem>>
 

@@ -9,9 +9,9 @@ data class CartItem(
     val id: Long,
     val restaurantName: String,
     val deliveryFee: Float,
-    val restaurantImage: String,
+    val restaurantImage: String?,
     val itemName: String,
     val price: Float,
-    val itemImage: String,
-    val quantity: Int
+    val itemImage: String?,
+    var quantity: Int
 )
