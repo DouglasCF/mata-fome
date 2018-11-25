@@ -1,22 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+    <data>
 
-    <fragment
-        android:id="@+id/hostFragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+        <import type="android.view.View" />
+
+        <variable
+            name="cartView"
+            type="br.com.fornaro.matafome.model.CartView" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/navigation_main" />
-</LinearLayout>
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <fragment
+            android:id="@+id/hostFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@id/cartLayout"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:navGraph="@navigation/navigation_main" />
+
+        <include
+            android:id="@+id/cartLayout"
+            layout="@layout/layout_cart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{cartView.quantity != 0 ? View.VISIBLE : View.GONE }"
+            app:cartView="@{cartView}"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

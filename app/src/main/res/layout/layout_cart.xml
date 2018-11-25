@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="cartView"
+            type="br.com.fornaro.matafome.model.CartView" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cart_layout_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:minHeight="62dp"
+        android:padding="@dimen/default_padding">
+
+        <TextView
+            android:id="@+id/quantityText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/quantity_format(cartView.quantity)}"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="SEE CART - #5" />
+
+        <br.com.fornaro.matafome.view.common.MoneyTextView
+            android:id="@+id/totalPriceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:price="@{cartView.totalPrice}"
+            tools:price="55" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

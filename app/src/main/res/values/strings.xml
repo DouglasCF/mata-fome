@@ -5,4 +5,5 @@
     <string name="menu">Cardápio</string>
     <string name="item_detail">Detalhe do item</string>
     <string name="add">Adicionar</string>
+    <string name="quantity_format">VER CARRINHO - #%s</string>
 </resources>
