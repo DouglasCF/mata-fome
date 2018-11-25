@@ -48,6 +48,7 @@ class AddToCartFragment : Fragment() {
 
         assignToBinding(restaurantDetail)
         setupAddToCartButton()
+        setupChangeQuantityButtons()
     }
 
     private fun assignToBinding(restaurantDetail: RestaurantDetail) {
@@ -56,9 +57,23 @@ class AddToCartFragment : Fragment() {
 
     private fun setupAddToCartButton() {
         addToCartButton.setOnClickListener {
-            viewModel.insertCartItem(restaurant,restaurantDetail, quantityText.text.toString().toInt())
+            viewModel.insertCartItem(restaurant, restaurantDetail, quantityText.text.toString().toInt())
 
             NavHostFragment.findNavController(this).navigateUp()
+        }
+    }
+
+    private fun setupChangeQuantityButtons() {
+        minusButton.setOnClickListener {
+            val quantity = quantityText.text.toString().toInt()
+            if (quantity > 1) {
+                quantityText.text = "${quantity - 1}"
+            }
+        }
+
+        plusButton.setOnClickListener {
+            val quantity = quantityText.text.toString().toInt()
+            quantityText.text = "${quantity + 1}"
         }
     }
 }
