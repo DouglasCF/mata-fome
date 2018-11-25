@@ -1,5 +1,6 @@
 package br.com.fornaro.matafome.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -13,6 +14,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import br.com.fornaro.matafome.R
 import br.com.fornaro.matafome.databinding.ActivityMainBinding
+import br.com.fornaro.matafome.view.cart.CartActivity
 import br.com.fornaro.matafome.viewmodel.CartViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBar(navController)
 
         setupViewModel()
+        setupCartLayout()
     }
 
     override fun onSupportNavigateUp() =
@@ -49,5 +52,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.getCartView().observe(this, Observer {
             binding.cartView = it
         })
+    }
+
+    private fun setupCartLayout() {
+        cartLayout.setOnClickListener {
+            startActivity(Intent(this, CartActivity::class.java)) }
     }
 }
