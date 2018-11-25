@@ -10,13 +10,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.fornaro.matafome.R
+import br.com.fornaro.matafome.databinding.FragmentCartBinding
 import br.com.fornaro.matafome.view.MainApplication
 import br.com.fornaro.matafome.viewmodel.CartViewModel
 import kotlinx.android.synthetic.main.layout_content_restaurants.*
 import javax.inject.Inject
 
 class CartFragment : Fragment() {
+
+    private lateinit var binding: FragmentCartBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -32,12 +34,19 @@ class CartFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_cart, container, false)
+        binding = FragmentCartBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        assignToBinding()
         setupRecyclerView()
+    }
+
+    private fun assignToBinding() {
+        binding.viewModel = viewModel
     }
 
     private fun setupViewModel() {

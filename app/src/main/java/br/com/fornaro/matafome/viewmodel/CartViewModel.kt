@@ -1,5 +1,6 @@
 package br.com.fornaro.matafome.viewmodel
 
+import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -12,7 +13,21 @@ import javax.inject.Inject
 
 open class CartViewModel @Inject constructor(private val cartRepository: CartRepository) : ViewModel() {
 
-    fun getCartItems() = cartRepository.getAll()
+    val totalPrice = ObservableField<Float>(0f)
+
+    fun getCartItems(): LiveData<List<CartItem>> = Transformations.map(cartRepository.getAll()) { list ->
+        var totalValue = 0f
+        list.forEach {
+            totalValue += it.price * it.quantity
+        }
+        val restaurantList = list.distinctBy { it.restaurantName }
+        restaurantList.forEach {
+            totalValue += it.deliveryFee
+        }
+
+        totalPrice.set(totalValue)
+        list
+    }
 
     fun insertCartItem(restaurant: Restaurant, restaurantDetail: RestaurantDetail, quantity: Int) {
         val cartItem = CartItem(
@@ -29,6 +44,10 @@ open class CartViewModel @Inject constructor(private val cartRepository: CartRep
             list.forEach {
                 quantity += it.quantity
                 totalPrice += it.price * it.quantity
+            }
+            val restaurantList = list.distinctBy { it.restaurantName }
+            restaurantList.forEach {
+                totalPrice += it.deliveryFee
             }
             CartView(quantity, totalPrice)
         }
