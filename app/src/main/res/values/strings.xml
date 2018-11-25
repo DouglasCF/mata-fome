@@ -8,4 +8,8 @@
     <string name="quantity_format">VER CARRINHO - #%s</string>
     <string name="cart">Carrinho</string>
     <string name="total">Total</string>
+    <string name="finish_order">Finalizar pedido</string>
+    <string name="choose">Escolher</string>
+    <string name="payment">Pagamento</string>
+    <string name="payment_method">Forma de Pagamento</string>
 </resources>
