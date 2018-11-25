@@ -12,7 +12,7 @@ import br.com.fornaro.matafome.databinding.FragmentAddToCartBinding
 import br.com.fornaro.matafome.model.Restaurant
 import br.com.fornaro.matafome.model.RestaurantDetail
 import br.com.fornaro.matafome.view.MainApplication
-import br.com.fornaro.matafome.viewmodel.CartViewModel
+import br.com.fornaro.matafome.viewmodel.AddToCartViewModel
 import kotlinx.android.synthetic.main.fragment_add_to_cart.*
 import javax.inject.Inject
 
@@ -25,7 +25,7 @@ class AddToCartFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val viewModel by lazy {
-        ViewModelProviders.of(this, viewModelFactory)[CartViewModel::class.java]
+        ViewModelProviders.of(this, viewModelFactory)[AddToCartViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,18 +46,19 @@ class AddToCartFragment : Fragment() {
         restaurant = safeArgs.restaurant ?: throw Exception("restaurant cant be null")
         restaurantDetail = safeArgs.restaurantDetail ?: throw Exception("restaurantDetail cant be null")
 
-        assignToBinding(restaurantDetail)
+        assignToBinding()
         setupAddToCartButton()
         setupChangeQuantityButtons()
     }
 
-    private fun assignToBinding(restaurantDetail: RestaurantDetail) {
+    private fun assignToBinding() {
         binding.restaurantDetail = restaurantDetail
+        binding.viewModel = viewModel
     }
 
     private fun setupAddToCartButton() {
         addToCartButton.setOnClickListener {
-            viewModel.insertCartItem(restaurant, restaurantDetail, quantityText.text.toString().toInt())
+            viewModel.insertCartItem(restaurant, restaurantDetail)
 
             NavHostFragment.findNavController(this).navigateUp()
         }
@@ -65,15 +66,11 @@ class AddToCartFragment : Fragment() {
 
     private fun setupChangeQuantityButtons() {
         minusButton.setOnClickListener {
-            val quantity = quantityText.text.toString().toInt()
-            if (quantity > 1) {
-                quantityText.text = "${quantity - 1}"
-            }
+            viewModel.decreaseQuantity()
         }
 
         plusButton.setOnClickListener {
-            val quantity = quantityText.text.toString().toInt()
-            quantityText.text = "${quantity + 1}"
+            viewModel.increaseQuantity()
         }
     }
 }

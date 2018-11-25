@@ -10,7 +10,7 @@ import br.com.fornaro.matafome.model.RestaurantDetail
 import br.com.fornaro.matafome.repository.CartRepository
 import javax.inject.Inject
 
-class CartViewModel @Inject constructor(private val cartRepository: CartRepository) : ViewModel() {
+open class CartViewModel @Inject constructor(private val cartRepository: CartRepository) : ViewModel() {
 
     fun getCartItems() = cartRepository.getAll()
 
