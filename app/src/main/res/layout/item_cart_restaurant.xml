@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="restaurant"
+            type="br.com.fornaro.matafome.model.Restaurant" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EAEAEA"
+        android:padding="@dimen/default_padding">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/image_size"
+            android:layout_height="@dimen/image_size"
+            android:contentDescription="@null"
+            app:center_crop="@{true}"
+            app:image_url="@{restaurant.imageUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholder="@{@drawable/ic_restaurant}"
+            app:rounded_corners="@{true}"
+            tools:srcCompat="@drawable/ic_restaurant" />
+
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{restaurant.name}"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/image"
+            tools:text="Restaurant Name" />
+
+        <br.com.fornaro.matafome.view.common.MoneyTextView
+            android:id="@+id/priceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_space"
+            android:layout_marginTop="@dimen/default_space"
+            android:textColor="@color/priceColor"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/deliveryLabel"
+            app:price="@{restaurant.deliveryFee}"
+            tools:price="15" />
+
+        <TextView
+            android:id="@+id/deliveryLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delivery_fee"
+            android:textColor="@color/priceColor"
+            app:layout_constraintBottom_toBottomOf="@id/priceText"
+            app:layout_constraintStart_toStartOf="@id/nameText"
+            app:layout_constraintTop_toTopOf="@id/priceText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

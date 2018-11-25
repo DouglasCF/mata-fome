@@ -19,4 +19,12 @@ class CartRepository(private val dao: CartItemDao) {
             }
         }
     }
+
+    fun update(cartItem: CartItem) {
+        doAsync { dao.update(cartItem) }
+    }
+
+    fun delete(cartItem: CartItem) {
+        doAsync { dao.delete(cartItem) }
+    }
 }

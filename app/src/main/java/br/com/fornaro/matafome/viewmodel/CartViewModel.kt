@@ -33,4 +33,18 @@ open class CartViewModel @Inject constructor(private val cartRepository: CartRep
             CartView(quantity, totalPrice)
         }
     }
+
+    fun decreaseQuantity(cartItem: CartItem) {
+        cartItem.quantity--
+        if (cartItem.quantity == 0) {
+            cartRepository.delete(cartItem)
+        } else {
+            cartRepository.update(cartItem)
+        }
+    }
+
+    fun increaseQuantity(cartItem: CartItem) {
+        cartItem.quantity++
+        cartRepository.update(cartItem)
+    }
 }

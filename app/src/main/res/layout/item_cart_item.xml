@@ -6,17 +6,13 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="br.com.fornaro.matafome.viewmodel.AddToCartViewModel" />
-
-        <variable
-            name="restaurantDetail"
-            type="br.com.fornaro.matafome.model.RestaurantDetail" />
+            name="cartItem"
+            type="br.com.fornaro.matafome.database.entities.CartItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="@dimen/default_padding">
 
         <ImageView
@@ -25,7 +21,7 @@
             android:layout_height="@dimen/image_size"
             android:contentDescription="@null"
             app:center_crop="@{true}"
-            app:image_url="@{restaurantDetail.imageUrl}"
+            app:image_url="@{cartItem.itemImage}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:placeholder="@{@drawable/ic_food}"
@@ -39,24 +35,13 @@
             android:layout_marginStart="@dimen/default_margin"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{restaurantDetail.name}"
+            android:text="@{cartItem.itemName}"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/image"
             tools:text="Item Name" />
-
-        <TextView
-            android:id="@+id/descriptionText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_space"
-            android:text="@{restaurantDetail.description}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/nameText"
-            app:layout_constraintTop_toBottomOf="@id/nameText"
-            tools:text="Type of Restaurant" />
 
         <br.com.fornaro.matafome.view.common.MoneyTextView
             android:id="@+id/priceText"
@@ -67,21 +52,21 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/nameText"
-            app:layout_constraintTop_toBottomOf="@id/descriptionText"
-            app:price="@{restaurantDetail.price}"
+            app:layout_constraintTop_toBottomOf="@id/nameText"
+            app:price="@{cartItem.price}"
             tools:price="15" />
 
         <TextView
             android:id="@+id/quantityText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.valueOf(viewModel.quantity)}"
+            android:layout_marginStart="@dimen/default_margin"
+            android:text="@{String.valueOf(cartItem.quantity)}"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/plusButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/plusButton" />
+            app:layout_constraintBottom_toBottomOf="@id/minusButton"
+            app:layout_constraintStart_toEndOf="@id/minusButton"
+            app:layout_constraintTop_toTopOf="@id/minusButton" />
 
         <Button
             android:id="@+id/plusButton"
@@ -89,11 +74,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
             android:text="+"
             android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/minusButton"
             app:layout_constraintStart_toEndOf="@id/quantityText"
-            app:layout_constraintTop_toBottomOf="@id/priceText" />
+            app:layout_constraintTop_toTopOf="@id/minusButton" />
 
         <Button
             android:id="@+id/minusButton"
@@ -104,32 +89,29 @@
             android:layout_marginEnd="@dimen/default_margin"
             android:text="-"
             android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@id/quantityText"
-            app:layout_constraintTop_toBottomOf="@id/priceText" />
-
-        <Button
-            android:id="@+id/addToCartButton"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
-            android:gravity="start|center_vertical"
-            android:padding="@dimen/default_padding"
-            android:text="@string/add"
-            app:layout_constraintTop_toBottomOf="@id/plusButton" />
+            app:layout_constraintTop_toBottomOf="@id/image" />
 
         <br.com.fornaro.matafome.view.common.MoneyTextView
+            android:id="@+id/totalPriceText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:elevation="8dp"
-            android:textColor="@android:color/white"
+            android:layout_marginTop="@dimen/default_space"
+            android:textColor="@color/priceColor"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/addToCartButton"
-            app:layout_constraintEnd_toEndOf="@id/addToCartButton"
-            app:layout_constraintTop_toTopOf="@id/addToCartButton"
-            app:price="@{restaurantDetail.price * viewModel.quantity}"
-            tools:price="12" />
+            app:layout_constraintBottom_toBottomOf="@id/minusButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:price="@{cartItem.price * cartItem.quantity}"
+            tools:price="15" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_space"
+            android:text="@string/total"
+            android:textColor="@color/priceColor"
+            app:layout_constraintBottom_toTopOf="@id/totalPriceText"
+            app:layout_constraintEnd_toEndOf="@id/totalPriceText" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

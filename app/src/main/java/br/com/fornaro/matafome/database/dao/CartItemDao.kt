@@ -10,7 +10,7 @@ interface CartItemDao {
     @Query("SELECT * FROM CartItem WHERE restaurantName = :restaurantName AND itemName = :itemName")
     fun get(restaurantName: String, itemName: String): CartItem?
 
-    @Query("SELECT * FROM CartItem")
+    @Query("SELECT * FROM CartItem ORDER BY restaurantName")
     fun getAll(): LiveData<List<CartItem>>
 
     @Insert
