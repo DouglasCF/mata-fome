@@ -8,12 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.fornaro.matafome.databinding.FragmentCartBinding
 import br.com.fornaro.matafome.view.MainApplication
 import br.com.fornaro.matafome.viewmodel.CartViewModel
-import kotlinx.android.synthetic.main.layout_content_restaurants.*
+import kotlinx.android.synthetic.main.fragment_cart.*
 import javax.inject.Inject
 
 class CartFragment : Fragment() {
@@ -30,6 +31,9 @@ class CartFragment : Fragment() {
 
         (activity?.application as MainApplication).appComponent.inject(this)
 
+        val safeArgs = CartFragmentArgs.fromBundle(arguments)
+        safeArgs.payment?.let { viewModel.setPaymentMethod(it) }
+
         setupViewModel()
     }
 
@@ -43,6 +47,7 @@ class CartFragment : Fragment() {
 
         assignToBinding()
         setupRecyclerView()
+        setupPaymentButton()
     }
 
     private fun assignToBinding() {
@@ -65,6 +70,13 @@ class CartFragment : Fragment() {
             addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             layoutManager = LinearLayoutManager(activity)
             adapter = viewAdapter
+        }
+    }
+
+    private fun setupPaymentButton() {
+        paymentButton.setOnClickListener {
+            val action = CartFragmentDirections.nextAction()
+            NavHostFragment.findNavController(this).navigate(action)
         }
     }
 }

@@ -14,6 +14,7 @@ import javax.inject.Inject
 open class CartViewModel @Inject constructor(private val cartRepository: CartRepository) : ViewModel() {
 
     val totalPrice = ObservableField<Float>(0f)
+    val paymentMethod = ObservableField<String>()
 
     fun getCartItems(): LiveData<List<CartItem>> = Transformations.map(cartRepository.getAll()) { list ->
         var totalValue = 0f
@@ -65,5 +66,9 @@ open class CartViewModel @Inject constructor(private val cartRepository: CartRep
     fun increaseQuantity(cartItem: CartItem) {
         cartItem.quantity++
         cartRepository.update(cartItem)
+    }
+
+    fun setPaymentMethod(payment: String) {
+        paymentMethod.set(payment)
     }
 }
