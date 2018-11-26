@@ -71,4 +71,8 @@ open class CartViewModel @Inject constructor(private val cartRepository: CartRep
     fun setPaymentMethod(payment: String) {
         paymentMethod.set(payment)
     }
+
+    fun finishOrder() {
+        cartRepository.finishOrder(paymentMethod.get())
+    }
 }

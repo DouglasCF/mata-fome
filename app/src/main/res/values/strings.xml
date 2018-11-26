@@ -12,4 +12,5 @@
     <string name="choose">Escolher</string>
     <string name="payment">Pagamento</string>
     <string name="payment_method">Forma de Pagamento</string>
+    <string name="order_finished">Pedido realizado com sucesso!</string>
 </resources>

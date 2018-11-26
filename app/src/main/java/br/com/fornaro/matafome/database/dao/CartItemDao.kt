@@ -24,4 +24,7 @@ interface CartItemDao {
 
     @Update
     fun update(cartItem: CartItem)
+
+    @Query("DELETE FROM cartitem")
+    fun clear()
 }

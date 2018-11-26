@@ -27,4 +27,10 @@ class CartRepository(private val dao: CartItemDao) {
     fun delete(cartItem: CartItem) {
         doAsync { dao.delete(cartItem) }
     }
+
+    fun finishOrder(payment: String?) {
+        // Send to API
+
+        doAsync { dao.clear() }
+    }
 }

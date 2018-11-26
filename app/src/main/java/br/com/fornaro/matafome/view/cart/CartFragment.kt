@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.fornaro.matafome.R
 import br.com.fornaro.matafome.databinding.FragmentCartBinding
 import br.com.fornaro.matafome.view.MainApplication
 import br.com.fornaro.matafome.viewmodel.CartViewModel
@@ -48,6 +50,7 @@ class CartFragment : Fragment() {
         assignToBinding()
         setupRecyclerView()
         setupPaymentButton()
+        setupFinishOrderButton()
     }
 
     private fun assignToBinding() {
@@ -77,6 +80,14 @@ class CartFragment : Fragment() {
         paymentButton.setOnClickListener {
             val action = CartFragmentDirections.nextAction()
             NavHostFragment.findNavController(this).navigate(action)
+        }
+    }
+
+    private fun setupFinishOrderButton() {
+        finishButton.setOnClickListener {
+            viewModel.finishOrder()
+            Toast.makeText(activity, R.string.order_finished, Toast.LENGTH_LONG).show()
+            NavHostFragment.findNavController(this).navigateUp()
         }
     }
 }
