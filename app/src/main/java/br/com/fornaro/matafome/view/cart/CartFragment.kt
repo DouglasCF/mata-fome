@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +16,9 @@ import br.com.fornaro.matafome.databinding.FragmentCartBinding
 import br.com.fornaro.matafome.view.MainApplication
 import br.com.fornaro.matafome.viewmodel.CartViewModel
 import kotlinx.android.synthetic.main.fragment_cart.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.okButton
 import javax.inject.Inject
 
 class CartFragment : Fragment() {
@@ -65,6 +67,15 @@ class CartFragment : Fragment() {
                 activity?.finish()
             }
         })
+
+        viewModel.getMessage().observe(this, Observer {
+            it?.let { cartMessage ->
+                when (cartMessage) {
+                    CartMessage.CHOOSE_PAYMENT_METHOD -> showPaymentEmptyDialog()
+                    CartMessage.ORDER_FINISHED -> finishOrder()
+                }
+            }
+        })
     }
 
     private fun setupRecyclerView() {
@@ -86,8 +97,17 @@ class CartFragment : Fragment() {
     private fun setupFinishOrderButton() {
         finishButton.setOnClickListener {
             viewModel.finishOrder()
-            Toast.makeText(activity, R.string.order_finished, Toast.LENGTH_LONG).show()
-            NavHostFragment.findNavController(this).navigateUp()
         }
+    }
+
+    private fun showPaymentEmptyDialog() {
+        activity?.alert(R.string.payment_method_is_empty) {
+            okButton { }
+        }?.show()
+    }
+
+    private fun finishOrder() {
+        activity?.longToast(R.string.order_finished)
+        NavHostFragment.findNavController(this).navigateUp()
     }
 }
