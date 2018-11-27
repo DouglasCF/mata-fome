@@ -19,4 +19,5 @@ The project was developed as follows:
 * Retrofit;
 * RxJava;
 * Dagger2;
-* Glide.
+* Glide;
+* Firebase Cloud Message.
